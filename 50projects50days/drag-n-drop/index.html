@@ -1,20 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Drag N Drop</title>
-  </head>
-  <body>
-    <div class="empty">
-      <div class="fill" draggable="true"></div>
-    </div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
-    <div class="empty"></div>
 
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Drag N Drop</title>
+</head>
+
+<body>
+  <div class="empty">
+    <div class="fill" draggable="true"></div>
+  </div>
+  <div class="empty"></div>
+  <div class="empty"></div>
+  <div class="empty"></div>
+  <div class="empty"></div>
+
+  <script >
+
+
+  // 这是一个div
+    const fill = document.querySelector('.fill')
+    //  吧全部的放图片的地方
+    const empties = document.querySelectorAll('.empty')
+
+    fill.addEventListener('dragstart', dragStart)
+    fill.addEventListener('dragend', dragEnd)
+
+    for (const empty of empties) {
+      empty.addEventListener('dragover', dragOver)
+      // 自带的一些事件 web api
+      empty.addEventListener('dragenter', dragEnter)
+      empty.addEventListener('dragleave', dragLeave)
+      empty.addEventListener('drop', dragDrop)
+    }
+
+    function dragStart() {
+      //边框加厚  这边是加一个属性 
+      this.className += ' hold'
+      setTimeout(() => this.className = 'invisible', 0)
+    }
+
+    function dragEnd() {
+      this.className = 'fill'
+    }
+
+    function dragOver(e) {
+      e.preventDefault()
+    }
+
+    function dragEnter(e) {
+      e.preventDefault()
+      this.className += ' hovered'
+    }
+
+    function dragLeave() {
+      this.className = 'empty'
+    }
+
+    function dragDrop() {
+      this.className = 'empty'
+      this.append(fill)
+    }
+
+
+  </script>
+</body>
+
 </html>
