@@ -6,6 +6,7 @@ const search = document.getElementById('search')
 
 async function getUser(username) {
     try {
+        // 拼串拿到 api
         const { data } = await axios(APIURL + username)
 
         createUserCard(data)

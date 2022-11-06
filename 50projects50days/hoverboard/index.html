@@ -1,13 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Hoverboard</title>
-  </head>
-  <body>
-    <div class="container" id="container"></div>
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Hoverboard</title>
+</head>
+
+<body>
+  <div class="container" id="container"></div>
+  <script>
+
+
+    const container = document.getElementById('container')
+    const colors = ['#e74c3c', '#8e44ad', '#3498db', '#e67e22', '#2ecc71']
+    const SQUARES = 1000
+
+    for (let i = 0; i < SQUARES; i++) {
+      //  加500个小格子
+      const square = document.createElement('div')
+      square.classList.add('square')
+
+      square.addEventListener('mouseover', () => setColor(square))
+
+      square.addEventListener('mouseout', () => removeColor(square))
+
+      container.appendChild(square)
+    }
+//     上色
+    function setColor(element) {
+      const color = getRandomColor()
+      // 随机设置一个颜色 
+      element.style.background = color
+      element.style.boxShadow = `20px 20px 2px ${color}, 20px 20px 100px ${color}`
+    } 
+//  移除颜色  要一点的时间  
+    function removeColor(element) {
+      element.style.background = '#1d1d1d'
+      element.style.boxShadow = '0 0 2px #000'
+    }
+
+    function getRandomColor() {
+      return colors[Math.floor(Math.random() * colors.length)]
+    }
+  </script>
+</body>
+
 </html>
