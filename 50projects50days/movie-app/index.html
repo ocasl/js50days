@@ -1,20 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Movie App</title>
-  </head>
-  <body>
-    <header>
-      <form id="form">
-        <input type="text" id="search" class="search" placeholder="Search">
-      </form>
-    </header>
 
-    <main id="main"></main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Movie App</title>
+</head>
 
-    <script src="script.js"></script>
-  </body>
+<body>
+  <header>
+    <form id="form" >
+      <input type="text" id="search" class="search" placeholder="Search">
+    </form>
+  </header>
+
+  <main id="main"></main>
+
+  <script>
+    // 放在上面会上去一幅画面介绍的  然后需要展示的是名字和图片还有评分  实现一个搜索的功能 取决于是电影的名字
+
+    const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1'
+    const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
+    const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="'
+
+    const main = document.getElementById('main')
+    const form = document.getElementById('form')
+    // input
+    const search = document.getElementById('search')
+
+    // Get initial movies  包括了一个
+    getMovies(API_URL)
+
+    async function getMovies(url) {
+      const res = await fetch(url)
+      const data = await res.json()
+
+      showMovies(data.results)
+    }
+
+    function showMovies(movies) {
+      main.innerHTML = ''
+
+      movies.forEach((movie) => {
+        const { title, poster_path, vote_average, overview } = movie
+//  创建div   
+        const movieEl = document.createElement('div')
+        //  提价 class 是代表了 要那个 style   
+        movieEl.classList.add('movie')
+
+        movieEl.innerHTML = `
+            <img src="${IMG_PATH + poster_path}" alt="${title}">
+            <div class="movie-info">
+          <h3>${title}</h3>
+          
+          <span class="${getClassByRate(vote_average)}">${vote_average}</span>
+            </div>
+            <div class="overview">
+          <h3>Overview</h3>
+          ${overview}
+        </div>
+        `
+        main.appendChild(movieEl)
+      })
+    }
+//  需要一个颜色  存在class里面 ， 
+    function getClassByRate(vote) {
+      if (vote >= 8) {
+        return 'green'
+      } else if (vote >= 5) {
+        return 'orange'
+      } else {
+        return 'red'
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
+      console.log('出发了 !11');
+      //    他的默认行为我们没有去写
+      e.preventDefault()
+  //  阻止了表单提交   拿到数据
+      const searchTerm = search.value
+  // 存在 数据的情况下
+      if (searchTerm && searchTerm !== '') {
+        //  获取这个电影 注意这里包括了 把数据渲染上去的一个过程
+        getMovies(SEARCH_API + searchTerm)
+//  质控
+        search.value = ''
+      } else {
+        //       重定向  
+        window.location.reload()
+      }
+    })
+  </script>
+</body>
+
 </html>

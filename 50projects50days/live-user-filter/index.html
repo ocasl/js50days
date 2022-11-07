@@ -1,25 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Live User Filter</title>
-  </head>
-  <body>
-    <div class="container">
-      <header class="header">
-        <h4 class="title">Live User Filter</h4>
-        <small class="subtitle">Search by name and/or location</small>
-        <input type="text" id="filter" placeholder="Search">
-      </header>
 
-      <ul id="result" class="user-list">
-        <li>
-          <h3>Loading...</h3>
-        </li>
-      </ul>
-    </div>
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Live User Filter</title>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h4 class="title">Live User Filter</h4>
+      <small class="subtitle">Search by name and/or location</small>
+      <input type="text" id="filter" placeholder="Search">
+    </header>
+
+    <ul id="result" class="user-list">
+      <li>
+        <h3>Loading...</h3>
+      </li>
+    </ul>
+  </div>
+  <script>
+    const result = document.getElementById('result')
+    const filter = document.getElementById('filter')
+    const listItems = []
+
+    getData()
+
+    filter.addEventListener('input', (e) => filterData(e.target.value))
+
+    async function getData() {
+      const res = await fetch('https://randomuser.me/api?results=50')
+
+
+
+
+      const { results } = await res.json()
+
+
+      console.log(results);
+      // Clear result
+      result.innerHTML = ''
+
+      results.forEach(user => {
+        const li = document.createElement('li')
+  //  array 存放进去之后又拿出来哈哈哈哈
+        listItems.push(li)
+
+        li.innerHTML = `
+            <img src="${user.picture.large}" alt="${user.name.first}">
+            <div class="user-info">
+                <h4>${user.name.first} ${user.name.last}</h4>
+                <p>${user.location.city}, ${user.location.country}</p>
+            </div>
+        `
+
+        result.appendChild(li)
+      })
+    }
+
+    function filterData(searchTerm) {
+      listItems.forEach(item => {
+        if (item.innerText.toLowerCase().includes(searchTerm.toLowerCase())) {
+          // 这个直接显示出来 另外的全部移除
+          item.classList.remove('hide')
+        } else {
+          item.classList.add('hide')
+        }
+      })
+    }
+
+
+
+  </script>
+</body>
+
 </html>
