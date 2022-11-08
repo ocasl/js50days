@@ -1,24 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Progress Steps</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="progress-container">
-        <div class="progress" id="progress"></div>
-        <div class="circle active">1</div>
-        <div class="circle">2</div>
-        <div class="circle">3</div>
-        <div class="circle">4</div>
-      </div>
 
-      <button class="btn" id="prev" disabled>Prev</button>
-      <button class="btn" id="next">Next</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Progress Steps</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="progress-container">
+      <div class="progress" id="progress"></div>
+      <div class="circle active">1</div>
+      <div class="circle">2</div>
+      <div class="circle">3</div>
+      <div class="circle">4</div>
     </div>
-    <script src="script.js"></script>
-  </body>
+
+    <button class="btn" id="prev" disabled>Prev</button>
+    <button class="btn" id="next">Next</button>
+  </div>
+  <script>
+
+
+    // const progress = document.getElementById('progress')
+    // const prev = document.getElementById('prev')
+    // const next = document.getElementById('next')
+    // const circles = document.querySelectorAll('.circle')
+
+    // let currentActive = 1
+
+    // next.addEventListener('click', () => {
+    //   currentActive++
+
+    //   if (currentActive > circles.length) {
+    //     currentActive = circles.length
+    //   }
+
+    //   update()
+    // })
+
+    // prev.addEventListener('click', () => {
+    //   currentActive--
+
+    //   if (currentActive < 1) {
+    //     currentActive = 1
+    //   }
+
+    //   update()
+    // })
+
+    // function update() {
+    //   circles.forEach((circle, idx) => {
+    //     if (idx < currentActive) {
+    //       circle.classList.add('active')
+    //     } else {
+    //       circle.classList.remove('active')
+    //     }
+    //   })
+
+    //   const actives = document.querySelectorAll('.active')
+
+    //   progress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%'
+
+    //   if (currentActive === 1) {
+    //     prev.disabled = true
+    //   } else if (currentActive === circles.length) {
+    //     next.disabled = true
+    //   } else {
+    //     prev.disabled = false
+    //     next.disabled = false
+    //   }
+    // }
+
+    //  两个按钮 next 和preve   当数字为1 的时候 prev为黑色  next为蓝色  4的时候只有prev没有next
+    const progress = document.getElementById('progress')
+    const prev = document.getElementById('prev')
+    const next = document.getElementById('next')
+    const circles = document.querySelectorAll('.circle')
+
+console.log(circles);
+   let c=1
+   next.addEventListener('click',()=>{
+    c++;
+    //   不可以超过process 的长度
+    if(c>4){
+      c=4
+    }
+    update()
+
+   })
+   prev.addEventListener('click',()=>{
+    c--;
+    //   不可以超过process 的长度
+    if(c<1){
+      c=1
+    }
+    update()
+
+   })
+function    update(){
+  // 第一个是div 第二个才是索引
+  circles.forEach((circle,index)=>{
+    console.log(circle,index);
+    //   刚好少一嘛然后就是要小于现在处于的一个数值位置 小于他你就亮 从一开始算的  1<2 刚好
+    if(index<c){
+      circle.classList.add('active')
+      
+    }else{
+      circle.classList.remove('active')
+    }
+
+
+  })
+
+
+
+
+
+//  拿到全部亮了的元素  因为是有一个class
+const as= document.querySelectorAll('.active')
+  //  这个是按照比例来变化的
+progress.style.width=(as.length-1)/(circles.length-1)*100+'%'
+
+if(c===1){
+  prev.disabled=true
+}else if(c===4){
+  next.disabled=true
+}else{
+  // 其他情况就是可以用的情况
+  prev.disabled=false
+
+  next.disabled=false
+}
+
+// 这个包在更新里面的
+} 
+  </script>
+</body>
+
 </html>
