@@ -17,20 +17,21 @@
   </button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.2.2/marked.min.js"></script>
-  <script src="script.js">
+  <script >
 
 
     //  新建一个div  然后这边 有两个按钮   写和删 的点击事件
     const addBtn = document.getElementById('add')
-l
-    const notes = JSON.parse(localStorage.getItem('notes'))
 
+    const notes = JSON.parse(localStorage.getItem('notes'))
+    //  有的话才给处理  
     if (notes) {
       notes.forEach(note => addNewNote(note))
     }
+    //   加一个框子 
 
     addBtn.addEventListener('click', () => addNewNote())
-
+    //    内容是默认的没有的情况
     function addNewNote(text = '') {
       const note = document.createElement('div')
       note.classList.add('note')
@@ -70,19 +71,27 @@ l
         main.innerHTML = marked(value)
 
         updateLS()
+
+      // console.log(notesText);
+
       })
 
       document.body.appendChild(note)
     }
-
+    //   
     function updateLS() {
+      //  获取 text
       const notesText = document.querySelectorAll('textarea')
-
+      //      开一个数组
       const notes = []
 
+      //   把数据推进去
       notesText.forEach(note => notes.push(note.value))
 
+      console.log(notes);
+      //  设置进这个note里面
       localStorage.setItem('notes', JSON.stringify(notes))
+      console.log(localStorage.getItem('notes', JSON.stringify(notes)),'dddd');
     }
   </script>
 </body>
