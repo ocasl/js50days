@@ -11,9 +11,91 @@
       <h3>Enter all of the choices divided by a comma (','). <br> Press enter when you're done</h3>
       <textarea placeholder="Enter choices here..." id="textarea"></textarea>
 
-      <div id="tags"></div>
+      <div id="tags">121321</div>
     </div>
 
-    <script src="script.js"></script>
+    <script >
+
+
+//  用逗号分开展示出来一个个的div
+
+// 放div的位置放选项的位置
+const tagsEl = document.getElementById('tags')
+  //   输入的数据从这里面去拿
+const textarea = document.getElementById('textarea')
+// 默认什么都不动都是集中在里面的情况
+textarea.focus()
+// 只要不输入就开始渲染
+textarea.addEventListener('keyup', (e) => {
+    createTags(e.target.value)
+//   如果按回车代表不会渲染了  先把里面指控之后 等一个0.1s 之后直接
+    if(e.key === 'Enter') {
+        setTimeout(() => {
+            e.target.value = ''
+        }, 10)
+
+        randomSelect()
+    }
+})
+
+function createTags(input) {
+  //  逗号分完之后还要看是不是空的 之后再去一下头尾 因为你前面后面空格是不算的 算是两次筛选啦
+    const tags = input.split(',').filter(tag => tag.trim() !== '').map(tag => tag.trim())
+  //   里面不放东西 清空
+    tagsEl.innerHTML = ''
+
+    tags.forEach(tag => {
+        const tagEl = document.createElement('span')
+        // class 为tag 就有样式啦 , 然后里面再放talel
+        tagEl.classList.add('tag')
+        tagEl.innerText = tag
+        tagsEl.appendChild(tagEl)
+    })
+}
+//  随便选一个去闪
+function randomSelect() {
+  //   一共可以闪的时间是这个基础上乘一个一百
+    const times = 100000
+
+    const interval = setInterval(() => {
+        const randomTag = pickRandomTag()
+	
+	if (randomTag !== undefined) {
+        highlightTag(randomTag)
+
+        setTimeout(() => {
+            unHighlightTag(randomTag)
+        }, 100)
+	}
+    }, 100);
+
+    setTimeout(() => {
+        clearInterval(interval)
+//  随机让一个闪灯下一个肯定是要取消闪灯的
+        setTimeout(() => {
+            const randomTag = pickRandomTag()
+
+            highlightTag(randomTag)
+        }, 100)
+
+    }, times * 100)
+}
+//   下面三个函数是为了上面而服务的
+function pickRandomTag() {
+    const tags = document.querySelectorAll('.tag')
+    return tags[Math.floor(Math.random() * tags.length)]
+}
+
+function highlightTag(tag) {
+    tag.classList.add('highlight')
+}
+
+function unHighlightTag(tag) {
+    tag.classList.remove('highlight')
+}
+
+// const span =document.createElement("span");
+
+    </script>
   </body>
 </html>
