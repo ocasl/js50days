@@ -1,26 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Scroll Animation</title>
-  </head>
-  <body>
-    <h1>Scroll to see the animation</h1>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <div class="box"><h2>Content</h2></div>
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Scroll Animation</title>
+</head>
+
+<body>
+  <h1>Scroll to see the animation</h1>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <div class="box">
+    <h2>Content</h2>
+  </div>
+  <script>
+    //  移动光标的同时 content还能移动 挺有意思的 
+    const boxes = document.querySelectorAll('.box')
+
+    window.addEventListener('scroll', checkBoxes)
+
+    checkBoxes()
+
+    function checkBoxes() {
+      //  五分之四的高度到了  window 的内嵌的高度
+      const triggerBottom = window.innerHeight / 5 * 4
+
+      boxes.forEach(box => {
+        //  可以获取domrect 的整个元素的 大小和想对于视口的位置
+
+        const boxTop = box.getBoundingClientRect().top
+        console.log(boxTop, triggerBottom);
+        // 是对每一个方块都去做检查 如果在5分之四的可视窗口内就show  不在就不show了 
+        if (boxTop < triggerBottom) {
+          box.classList.add('show')
+        } else {
+          box.classList.remove('show')
+        }
+      })
+    }
+  </script>
+</body>
+
 </html>

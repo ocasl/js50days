@@ -109,7 +109,7 @@ h1 {
 .split.left::before {
   transition: all var(--speed) ease-in-out;
 }
-
+/* 重点写样式区域 */
 .hover-left .left {
   width: var(--hover-width);
 }

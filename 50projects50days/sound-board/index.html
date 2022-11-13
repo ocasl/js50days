@@ -16,6 +16,40 @@
 
     <div id="buttons"></div>
 
-    <script src="script.js"></script>
+    <script >
+//  点击监听事件
+//  一共是六个声音
+const sounds = ['applause', 'boo', 'gasp', 'tada', 'victory', 'wrong']
+
+sounds.forEach(sound => {
+  // 创建 button   之后 给他添加按钮的样式
+    const btn = document.createElement('button')
+    btn.classList.add('btn')
+//   里面放声音
+    btn.innerText = sound
+//  
+    btn.addEventListener('click', () => {
+        // 暂停一下 放其他的歌
+        stopSongs()
+//  获取sound 之后就可以开始播放了
+        document.getElementById(sound).play()
+    })
+// 在后面加按钮
+    document.getElementById('buttons').appendChild(btn)
+})
+
+function stopSongs() {
+    sounds.forEach(sound => {
+        const song = document.getElementById(sound)
+
+        song.pause()
+        //  把歌曲的播放事件重置一下 暂停之后重置一下时间 以便下次播放重新开始
+        song.currentTime = 0;
+    })
+}
+
+
+
+    </script>
   </body>
 </html>

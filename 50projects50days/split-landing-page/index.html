@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Split Landing Page
-    </title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="split left">
-        <h1>Playstation 5</h1>
-        <a href="#" class="btn">Buy Now</a>
-      </div>
-      <div class="split right">
-        <h1>XBox Series X</h1>
-        <a href="#" class="btn">Buy Now</a>
-      </div>
-    </div>
 
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Split Landing Page
+  </title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="split left">
+      <h1>Playstation 5</h1>
+      <a href="#" class="btn">Buy Now</a>
+    </div>
+    <div class="split right">
+      <h1>XBox Series X</h1>
+      <a href="#" class="btn">Buy Now</a>
+    </div>
+  </div>
+
+  <script>
+
+// 两 个买的按钮先获取到
+    const left = document.querySelector('.left')
+    const right = document.querySelector('.right')
+    //  一个容器  放两个移动的框子的
+    const container = document.querySelector('.container')
+//   如果进来了就开始加样式了  两个样式在css已经写好了的
+    left.addEventListener('mouseenter', () => container.classList.add('hover-left'))
+    left.addEventListener('mouseleave', () => container.classList.remove('hover-left'))
+
+    right.addEventListener('mouseenter', () => container.classList.add('hover-right'))
+    right.addEventListener('mouseleave', () => container.classList.remove('hover-right'))
+  </script>
+</body>
+
 </html>

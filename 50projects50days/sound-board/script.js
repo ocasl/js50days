@@ -7,6 +7,7 @@ sounds.forEach(sound => {
     btn.innerText = sound
 
     btn.addEventListener('click', () => {
+        // 暂停一下 放其他的歌
         stopSongs()
 
         document.getElementById(sound).play()
