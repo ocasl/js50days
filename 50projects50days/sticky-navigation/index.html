@@ -47,14 +47,17 @@
 
   <script>
 
-
+// 拿到nav 
+// 页面来监听啊 只要滚动了就调用fixnav
     const nav = document.querySelector('.nav')
     window.addEventListener('scroll', fixNav)
-
+//   滚动了150px 就让样式加起来  不到的话还是一直去除这个样式的
     function fixNav() {
       if (window.scrollY > nav.offsetHeight + 150) {
+        // 也就是变白
         nav.classList.add('active')
       } else {
+        //   如果在小于的情况下我们就让他变黑
         nav.classList.remove('active')
       }
     }
