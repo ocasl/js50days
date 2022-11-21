@@ -1,20 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Todo List</title>
-  </head>
-  <body>
-    <h1>todos</h1>
-    <form id="form">
-      <input type="text" class="input" id="input" placeholder="Enter your todo" autocomplete="off">
 
-      <ul class="todos" id="todos"></ul>
-    </form>
-    <small>Left click to toggle completed. <br> Right click to delete todo</small>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Todo List</title>
+</head>
 
-    <script src="script.js"></script>
-  </body>
+<body>
+  <h1>todos</h1>
+  <form id="form">
+    <input type="text" class="input" id="input" placeholder="Enter your todo" autocomplete="off">
+
+    <ul class="todos" id="todos"></ul>
+  </form>
+  <small>Left click to toggle completed. <br> Right click to delete todo</small>
+
+  <script>
+    //  拿到input  取出input 的值 innerhtml 在div里面渲染出来就行了 
+    //   appendchilren
+    const form = document.getElementById('form')
+    const input = document.getElementById('input')
+    const todosUL = document.getElementById('todos')
+    //  拿到缓存里面的 todos 数据
+    const todos = JSON.parse(localStorage.getItem('todos'))
+
+    if (todos) {
+      todos.forEach(todo => addTodo(todo))
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      addTodo()
+    })
+
+    function addTodo(todo) {
+      let todoText = input.value
+
+      if (todo) {
+        todoText = todo.text
+      }
+
+      if (todoText) {
+        const todoEl = document.createElement('li')
+        if (todo && todo.completed) {
+          todoEl.classList.add('completed')
+        }
+        //    判断判断 todos里面的数据  之后再根据他们的 状态去加一个classlist 改变他们的样式
+        todoEl.innerText = todoText
+        //    添加上 classlist 说明他是完成的
+        todoEl.addEventListener('click', () => {
+          todoEl.classList.toggle('completed')
+
+          updateLS()
+        })
+
+        todoEl.addEventListener('contextmenu', (e) => {
+          e.preventDefault()
+
+          todoEl.remove()
+          updateLS()
+        })
+
+        todosUL.appendChild(todoEl)
+
+        input.value = ''
+        //  备份一下数据  记录全部数据不管有没有 完成的 数据 
+        updateLS()
+      }
+    }
+
+    function updateLS() {
+      //  拿到全部的li
+      todosEl = document.querySelectorAll('li')
+
+      const todos = []
+      //  更新就是备份一下数据吧  
+      todosEl.forEach(todoEl => {
+        todos.push({
+          text: todoEl.innerText,
+          //   通过她有没有computed这个classlist来判断 师范完成
+          completed: todoEl.classList.contains('completed')
+        })
+      })
+
+      localStorage.setItem('todos', JSON.stringify(todos))
+    }
+  </script>
+</body>
+
 </html>
